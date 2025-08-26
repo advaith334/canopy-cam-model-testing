@@ -2,4 +2,4 @@ Testing out different image segmentation to segment and find the percentage of p
 
 ### Methods tested out:
 1) Thresholding
-2) ... Still deciding
+2) Unsupervised ML
