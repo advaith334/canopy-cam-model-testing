@@ -16,6 +16,10 @@ def process_images_in_folder(folder_path: str, resized_size: Tuple[int, int] = (
     lower_green = (36, 20, 20)
     upper_green = (145, 255, 255)
 
+    # Prepare output directory: <folder>/canopy_cam_images/hsv_segmentation
+    out_dir = folder / "hsv_segmentation"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
     image_paths = [
         p for p in folder.iterdir()
         if p.is_file() and p.suffix.lower() in {".jpg", ".jpeg"}
@@ -38,7 +42,7 @@ def process_images_in_folder(folder_path: str, resized_size: Tuple[int, int] = (
         mask_upscaled = cv2.resize(mask, (bgr.shape[1], bgr.shape[0]), interpolation=cv2.INTER_NEAREST)
 
         stem = img_path.stem
-        out_path = img_path.with_name(f"{stem}_{rounded}.jpeg")
+        out_path = out_dir / f"{stem}_{rounded}.jpeg"
 
         ok = cv2.imwrite(str(out_path), mask_upscaled)
         if not ok:
